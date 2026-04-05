@@ -20,7 +20,9 @@
   </footer>
 
   <script>
-    fetch('content.html')
+    fetch(`content.html?t=${Date.now()}`, {
+      cache: "no-store"
+    })
       .then(res => res.text())
       .then(html => {
         const parser = new DOMParser();
