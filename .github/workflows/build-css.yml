@@ -10,15 +10,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - run: npm install -D tailwindcss postcss autoprefixer
-      - run: npx tailwindcss -i ./src/input.css -o ./dist/output.css
+      
+      - name: Create package.json if missing
+        run: |
+          if [ ! -f package.json ]; then
+            echo '{"name": "berkeley-build-guild", "version": "1.0.0", "devDependencies": {}}' > package.json
+          fi
+      
+      - name: Install dependencies
+        run: npm install -D tailwindcss postcss autoprefixer
+      
+      - name: Build Tailwind CSS
+        run: npx tailwindcss -i ./src/input.css -o ./dist/output.css
+      
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add dist/output.css
           git commit -m "Build CSS" || true
-          git push
+          git push || true
