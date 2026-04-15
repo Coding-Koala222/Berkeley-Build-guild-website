@@ -1,1 +1,9 @@
-{\n  "name": "berkeley-build-guild-website",\n  "version": "1.0.0",\n  "devDependencies": {\n    "tailwindcss": "^3.0.0",\n    "postcss": "^8.0.0",\n    "autoprefixer": "^10.0.0"\n  }\n}
+{
+  "name": "berkeley-build-guild-website",
+  "version": "1.0.0",
+  "devDependencies": {
+    "tailwindcss": "^3.0.0",
+    "postcss": "^8.0.0",
+    "autoprefixer": "^10.0.0"
+  }
+}
