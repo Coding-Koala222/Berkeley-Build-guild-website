@@ -14,7 +14,7 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
         with:
@@ -23,20 +23,12 @@ jobs:
       - run: npm install
 
       # Build your static site
-      - name: Build site
+      - name: Copy pages to public "dist" folder
         uses: canastro/copy-file-action@master
         with:
           source: pages/.
           target: dist/
           flags: '-r'
-
-      - name: Commit and push
-        run: |
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-          git add -A
-          git commit -m "Copy html files to dist folder" || echo "No changes to commit"
-          git push || echo "Nothing to push"
 
       - name: Ensure writable dist
         run: sudo chown -R $USER:$USER dist
@@ -45,9 +37,11 @@ jobs:
       - name: Optimize HTML with Classpresso
         run: npx classpresso optimize --dir dist
 
-      # Deploy to GitHub Pages branch (replace as appropriate)
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          user_name: 'GitHub-Actions Deploy [bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
