@@ -24,7 +24,7 @@ jobs:
 
       # Build your static site
       - name: Build site
-        uses: MadaraUchiha/copy-action@0.0.1
+        uses: canastro/copy-file-action@master
         with:
           source: pages/.
           target: dist/
